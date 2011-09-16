@@ -5,6 +5,8 @@
 \textclass article
 \begin_preamble
 \usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
 \setmainfont[BoldFont=STSong,ItalicFont=STKaiti]{STSong}
 \setsansfont[BoldFont=STHeiti]{STHeiti}
 \setmonofont{STFangsong}
@@ -166,6 +168,18 @@ Yen算法
 
 \begin_layout Subsection
 全图寻路的Floyd算法
+\end_layout
+
+\begin_layout Subsection
+Hamiltonian回路
+\end_layout
+
+\begin_layout Subsubsection
+简单的动态规划算法
+\end_layout
+
+\begin_layout Subsubsection
+优化的动态规划算法
 \end_layout
 
 \begin_layout Section
