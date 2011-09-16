@@ -7,6 +7,9 @@
 \usepackage{indentfirst}
 \setlength{\parindent}{2em}
 
+\usepackage{datetime}
+\renewcommand{\dateseparator}{-}
+
 \setmainfont[BoldFont=STSong,ItalicFont=STKaiti]{STSong}
 \setsansfont[BoldFont=STHeiti]{STHeiti}
 \setmonofont{STFangsong}
@@ -94,8 +97,59 @@ v0.1 preview
 \end_layout
 
 \begin_layout Author
-崔添翼 (Tianyi Cui, a.k.a.
- dd_engi)
+崔添翼 (Tianyi Cui)
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+a.k.a.
+ dd_engi
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+yyyymmdddate
+\backslash
+today
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Build 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pdfdate
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
