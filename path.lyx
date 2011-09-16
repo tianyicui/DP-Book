@@ -90,7 +90,7 @@
 \begin_inset Newline newline
 \end_inset
 
-v0.1 trunk
+v0.1 preview
 \end_layout
 
 \begin_layout Author
@@ -167,8 +167,8 @@ reference "sub:全图寻路的Floyd算法"
 \end_layout
 
 \begin_layout Standard
-另一方面，很多原本不存在图论模型的动态规划题目，也可转化成或建立起图论模型，并利用图论中的寻路算法进行解答。例如完全背包问题（TODO：引用相应章节），就可转化
-为图论模型：容量为
+另一方面，很多原本不存在图论模型的动态规划题目，也可转化成或建立起图论模型，并利用图论中的寻路算法进行解答。例如完全背包问题（TODO：引用《背包问题九讲》的相
+应章节），就可转化为图论模型：容量为
 \begin_inset Formula $V$
 \end_inset
 
@@ -235,11 +235,334 @@ reference "sub:有向无环图中的寻路"
 \end_layout
 
 \begin_layout Subsection
-方阵中的寻路
+矩阵中的寻路
 \end_layout
 
 \begin_layout Subsubsection
 基础问题
+\end_layout
+
+\begin_layout Standard
+问题是这样的：设有一
+\begin_inset Formula $M\times N$
+\end_inset
+
+的矩阵
+\begin_inset Formula $P$
+\end_inset
+
+，矩阵单元格中的元素皆是数字。从矩阵的左上角走到右下角，只能向右或向下走，怎样能使覆盖到的数字之和最大？（TODO：配图？）
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $M\times N$
+\end_inset
+
+的矩阵从左上走到右下，需要走
+\begin_inset Formula $M+N-2$
+\end_inset
+
+步，其中向下走
+\begin_inset Formula $M-1$
+\end_inset
+
+步，向右走
+\begin_inset Formula $N-1$
+\end_inset
+
+步，故可能的方案数共有
+\begin_inset Formula $\left(\begin{array}{c}
+M-1\\
+M+N-2
+\end{array}\right)$
+\end_inset
+
+种。用搜索穷举所有方案的时间复杂度太高，考虑使用动态规划算法。
+\end_layout
+
+\begin_layout Standard
+动态规划算法的一个典型思考方式是“只想一步”。以这道题目为例来说明，尽管要求做出的是
+\begin_inset Formula $M+N-2$
+\end_inset
+
+个向右或者向下的指令，我们不妨想想：知道了什么信息，就可以得出第一步应该怎么走。
+\end_layout
+
+\begin_layout Standard
+第一步有两种走法，向右走从
+\begin_inset Formula $(0,0)$
+\end_inset
+
+走到
+\begin_inset Formula $(0,1)$
+\end_inset
+
+，或者向下走从
+\begin_inset Formula $(0,0)$
+\end_inset
+
+走到
+\begin_inset Formula $(1,0)$
+\end_inset
+
+，二者的分野不仅存在于这一步覆盖到的数字不同，也体现在今后可选择的策略不同。例如若第一步向右走则左边第一列的数字再也无法拿到。
+\end_layout
+
+\begin_layout Standard
+如何才能判别从
+\begin_inset Formula $(0,0)$
+\end_inset
+
+到
+\begin_inset Formula $(M-1,N-1)$
+\end_inset
+
+的路途中第一步怎么走呢？怎样比较第一步的两种走法的优劣呢？很简单，这一方面取决于
+\begin_inset Formula $\text{(0,1)}$
+\end_inset
+
+和
+\begin_inset Formula $\text{(1,0)}$
+\end_inset
+
+上面的数字，另一方面也取决于，从这两点出发，走到终点的过程中还会覆盖哪些数字，可能覆盖的最大的数字之和是多少。
+\end_layout
+
+\begin_layout Standard
+于是这样抽象出动态规划的子问题：
+\end_layout
+
+\begin_layout Standard
+设
+\begin_inset Formula $F[i,j]$
+\end_inset
+
+表示从
+\begin_inset Formula $(i,j)$
+\end_inset
+
+出发，走到
+\begin_inset Formula $(M-1,N-1)$
+\end_inset
+
+，可以覆盖到的数字之和的最大值，需求解的原问题既是
+\begin_inset Formula $F[0,0]$
+\end_inset
+
+，边界条件是
+\begin_inset Formula $F[M-1,N-1]=P_{M-1,N-1}$
+\end_inset
+
+，状态转移方程是：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F[i,j]=P_{i,j}+\mathrm{max}\left\{ \begin{array}{c}
+F[i,j+1]\:\mathbf{if}\: j+1<N\\
+F[i+1,j]\:\mathbf{if}\: i+1<M
+\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+若将此方程以记忆化递归的方法实现，伪代码如下：
+\end_layout
+
+\begin_layout LyX-Code
+def 
+\begin_inset Formula $\mathsf{MatrixWalkRec}$
+\end_inset
+
+(
+\begin_inset Formula $F$
+\end_inset
+
+,
+\begin_inset Formula $i$
+\end_inset
+
+,
+\begin_inset Formula $j$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout LyX-Code
+    if 
+\begin_inset Formula $i\geq M$
+\end_inset
+
+ or 
+\begin_inset Formula $j\geq N$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        return 
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    if 
+\begin_inset Formula $F[i,j]=undefined$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        
+\begin_inset Formula $F[i,j]\,\leftarrow P_{i,j}$
+\end_inset
+
+ + max(
+\begin_inset Formula $\mathsf{MatrixWalkRec}$
+\end_inset
+
+(
+\begin_inset Formula $F$
+\end_inset
+
+,
+\begin_inset Formula $i$
+\end_inset
+
+,
+\begin_inset Formula $j+1$
+\end_inset
+
+),
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $\mathsf{MatrixWalkRec}$
+\end_inset
+
+(
+\begin_inset Formula $F$
+\end_inset
+
+,
+\begin_inset Formula $i+1$
+\end_inset
+
+,
+\begin_inset Formula $j$
+\end_inset
+
+))
+\end_layout
+
+\begin_layout LyX-Code
+    return 
+\begin_inset Formula $F[i,j]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+刚才应用了“只想一步”的方法，成功地解决了这道题目如何划分子问题、如何写出状态转移方程的问题。美中不足的是，上面给出的自然的实现是递归的实现。怎样将递归的状态转
+移方程实现成非递归的程序呢？
+\end_layout
+
+\begin_layout Standard
+这就需要对我们的状态转移方程所决定的状态之间的相互关系进行分析。我们看到，每个状态
+\begin_inset Formula $(i,j)$
+\end_inset
+
+依赖于它右方和下方的
+\begin_inset Formula $(i+1,j)$
+\end_inset
+
+和
+\begin_inset Formula $(i,j+1)$
+\end_inset
+
+，非递归的实现的实质是要确定一种合适的状态的求解顺序，保证任何状态的求解都在其依赖的状态之求解完成之后才开始。一种合适的顺序是：从下到上，从右至左。伪代码如下：
+\end_layout
+
+\begin_layout LyX-Code
+def 
+\begin_inset Formula $\mathsf{MatrixWalk}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    
+\begin_inset Formula $F[0\ldots M,N]\,\leftarrow0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    
+\begin_inset Formula $F[M,0\ldots N]\,\leftarrow0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    for 
+\begin_inset Formula $i\,\leftarrow M-1$
+\end_inset
+
+ to 
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        for 
+\begin_inset Formula $j\,\leftarrow N-1$
+\end_inset
+
+ to 
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+            
+\begin_inset Formula $F[i,j]\,\leftarrow P_{i,j}+\mathrm{max}(F[i,j+1],F[i+1,j]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+至此，本问题的动态规划解法分析完毕。留一个问题让读者思考：前面利用“只想一步”的思考方式时，想的是“第一步应该怎么走”，如果考虑的角度变成“最后一步应该怎么走”
+，会导出怎样的子问题定义、状态转移方程以及伪代码实现呢？
 \end_layout
 
 \begin_layout Subsubsection
