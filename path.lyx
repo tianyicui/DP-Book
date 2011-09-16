@@ -82,7 +82,15 @@
 \begin_body
 
 \begin_layout Title
-寻寻觅觅 道阻且长 trunk
+寻寻觅觅∙道阻且长
+\begin_inset Newline newline
+\end_inset
+
+动态规划与寻路问题
+\begin_inset Newline newline
+\end_inset
+
+v0.1 trunk
 \end_layout
 
 \begin_layout Author
@@ -91,7 +99,7 @@
 \end_layout
 
 \begin_layout Standard
-本文题为《寻寻觅觅 道阻且长》，从属于《动态规划的思考艺术》系列。
+本文题为《寻寻觅觅∙道阻且长》，副题为《动态规划与寻路问题》，从属于《动态规划的思考艺术》系列。
 \end_layout
 
 \begin_layout Standard
@@ -118,6 +126,11 @@ target "http://creativecommons.org/licenses/by-nc-sa/3.0/"
 \end_layout
 
 \begin_layout Standard
+本文的这个版本并未公开发布，只由作者直接发布给若干试读者，试读者没有传播给别人的权利。若你并非作者指定的试读者，而通过其它途径读到本文，则说明存在至少一位试读者
+未尽保密义务。
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
 
@@ -127,23 +140,120 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Section
-寻路问题简介
+寻路问题导引
+\end_layout
+
+\begin_layout Standard
+本文所探讨的寻路问题是指：给定某个可抽象为图论中的模型的图，要求找到图中满足某种性质的一条路径。除判别存在性之外，一般均要求此条路径具备某种最优性，亦即在某种计
+算方法下最短或最长。对于路径的起点和终点也常常有着限制。
+\end_layout
+
+\begin_layout Standard
+寻路问题一般都是最优化问题，这一点上与动态规划是一致的。所以说，很多寻路类型的题目都可用动态规划解答，图论中的Dijkstra算法（见
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Dijkstra算法"
+
+\end_inset
+
+）、Floyd算法（见
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:全图寻路的Floyd算法"
+
+\end_inset
+
+）都是动态规划在图论中的经典应用。
+\end_layout
+
+\begin_layout Standard
+另一方面，很多原本不存在图论模型的动态规划题目，也可转化成或建立起图论模型，并利用图论中的寻路算法进行解答。例如完全背包问题（TODO：引用相应章节），就可转化
+为图论模型：容量为
+\begin_inset Formula $V$
+\end_inset
+
+的背包转化为编号从
+\begin_inset Formula $0$
+\end_inset
+
+到
+\begin_inset Formula $V$
+\end_inset
+
+的点，每个费用为
+\begin_inset Formula $v_{i}$
+\end_inset
+
+、价值为
+\begin_inset Formula $w_{i}$
+\end_inset
+
+的物品转化为
+\begin_inset Formula $V-v_{i}+1$
+\end_inset
+
+条从
+\begin_inset Formula $k+v_{i}$
+\end_inset
+
+到
+\begin_inset Formula $k$
+\end_inset
+
+的长度为
+\begin_inset Formula $w_{i}$
+\end_inset
+
+的边（
+\begin_inset Formula $0\leq k\le V-v_{i}$
+\end_inset
+
+）。而找到一组最优解则对应为找到这个有向无环图中点
+\begin_inset Formula $V$
+\end_inset
+
+到点
+\begin_inset Formula $0$
+\end_inset
+
+的一条最长路（具体算法见
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:有向无环图中的寻路"
+
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Standard
+综上，寻路问题与动态规划有着千丝万缕的联系。本文后面的部分便着重探讨这种联系衍生出的千变万化的动态规划题目与解法。
 \end_layout
 
 \begin_layout Section
+特殊图中的寻路
+\end_layout
+
+\begin_layout Subsection
 方阵中的寻路
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 基础问题
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 变形问题
 \end_layout
 
 \begin_layout Subsection
-总结
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:有向无环图中的寻路"
+
+\end_inset
+
+有向无环图中的寻路
 \end_layout
 
 \begin_layout Section
@@ -155,6 +265,12 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Dijkstra算法"
+
+\end_inset
+
 Dijkstra算法
 \end_layout
 
@@ -167,6 +283,12 @@ Yen算法
 \end_layout
 
 \begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:全图寻路的Floyd算法"
+
+\end_inset
+
 全图寻路的Floyd算法
 \end_layout
 
