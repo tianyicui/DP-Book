@@ -1,0 +1,180 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage{indentfirst}
+\setmainfont[BoldFont=STSong,ItalicFont=STKaiti]{STSong}
+\setsansfont[BoldFont=STHeiti]{STHeiti}
+\setmonofont{STFangsong}
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics xetex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_title "背包问题九讲"
+\pdf_author "崔添翼"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 2
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref section
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+寻寻觅觅 道阻且长 trunk
+\end_layout
+
+\begin_layout Author
+崔添翼 (Tianyi Cui, a.k.a.
+ dd_engi)
+\end_layout
+
+\begin_layout Standard
+本文题为《寻寻觅觅 道阻且长》，从属于《动态规划的思考艺术》系列。
+\end_layout
+
+\begin_layout Standard
+本文的修订历史及最新版本请访问 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://github.com/tianyicui/DP-Book"
+
+\end_inset
+
+ 查阅。
+\end_layout
+
+\begin_layout Standard
+本文版权归原作者所有，采用 
+\begin_inset CommandInset href
+LatexCommand href
+name "CC BY-NC-SA"
+target "http://creativecommons.org/licenses/by-nc-sa/3.0/"
+
+\end_inset
+
+ 协议发布。
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+寻路问题简介
+\end_layout
+
+\begin_layout Section
+方阵中的寻路
+\end_layout
+
+\begin_layout Subsection
+基础问题
+\end_layout
+
+\begin_layout Subsection
+变形问题
+\end_layout
+
+\begin_layout Subsection
+总结
+\end_layout
+
+\begin_layout Section
+一般图中的寻路
+\end_layout
+
+\begin_layout Subsection
+单起点寻路的三种算法
+\end_layout
+
+\begin_layout Subsubsection
+Dijkstra算法
+\end_layout
+
+\begin_layout Subsubsection
+Bellman-Ford算法
+\end_layout
+
+\begin_layout Subsubsection
+Yen算法
+\end_layout
+
+\begin_layout Subsection
+全图寻路的Floyd算法
+\end_layout
+
+\begin_layout Section
+扩展的寻路问题
+\end_layout
+
+\begin_layout Subsection
+扩展的Dijkstra算法
+\end_layout
+
+\end_body
+\end_document
