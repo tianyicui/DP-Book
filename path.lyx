@@ -569,6 +569,91 @@ def
 变形问题
 \end_layout
 
+\begin_layout Standard
+第一种变形问题是：改变计算权值的方法。
+\end_layout
+
+\begin_layout Standard
+例如，将求最大值改成最小值，将求和的加法运算改成乘法，将矩阵单元格中的值由实数改成向量，等等⋯⋯
+\end_layout
+
+\begin_layout Standard
+一般而言，这种变形问题只需对状态转移方程进行一些微调就可以。
+\end_layout
+
+\begin_layout Standard
+但要注意的是，子问题的局部最优性是否还代表着全局最优性。例如，将问题中的“数字之和最大”改成“数字之积最大”之后，还按照上文中“如何踏出第一步”的方法思考时，假
+如说
+\begin_inset Formula $(0,0)$
+\end_inset
+
+中的数字是个负数，那么接下来向右走及向下走之后要解决的子问题就不是求“数字之积最大”而是希望求得一个“积是负数且绝对值最大”的子路径。
+\end_layout
+
+\begin_layout Standard
+也就是说，将“和”改成“积”后，对于每个子问题
+\begin_inset Formula $(i,j)$
+\end_inset
+
+，需要运算及记录的是两个值：一个是路径上数字之积的可能的最大值
+\begin_inset Formula $F[i,j]$
+\end_inset
+
+，一个是可能的最小值
+\begin_inset Formula $G[i,j]$
+\end_inset
+
+（或称绝对值最大的负值）。
+\end_layout
+
+\begin_layout Standard
+这个变形问题的伪代码及其实现强烈建议读者尝试一下。
+\end_layout
+
+\begin_layout Standard
+（TODO：是否在这里给出伪代码呢？）
+\end_layout
+
+\begin_layout Standard
+第二种变形问题是：改变路径的可行性。
+\end_layout
+
+\begin_layout Standard
+在原问题中，所有
+\begin_inset Formula $\left(\begin{array}{c}
+M-1\\
+M+N-2
+\end{array}\right)$
+\end_inset
+
+种路径都是可行的，但我们可以人为设置一些限制条件。例如，设置一些单元格为禁止通行的单元格。或设置一些单元格之间的边界为禁止通过的边界。或设置通过单元格或单元格之
+间的边界时必须满足某种条件。这样的限制条件并不会更改状态转移方程的形式，只不过可以转移到的状态要在程序中根据题义进行判断，这种判断可以设计得相当复杂。
+\end_layout
+
+\begin_layout Standard
+给一个这种变形的例题：单元格之间有可能存在锁着的门，打开一扇门必须耗费一把钥匙，不同的门需要的钥匙的种类不同，单元格中可能会捡到钥匙；问题仍然是求解最优的路径。
+\end_layout
+
+\begin_layout Standard
+这道例题的求解，需要在状态转移方程中增加一维来表示手中现有的钥匙种类和数量。然后在计算过程中根据捡到和消耗的钥匙进行状态之间的转移。
+\end_layout
+
+\begin_layout Standard
+（TODO：加个示意图？）
+\end_layout
+
+\begin_layout Standard
+第三种变形问题是：增加路径的条数。
+\end_layout
+
+\begin_layout Standard
+（TODO：写具体内容。）
+\end_layout
+
+\begin_layout Standard
+（TODO：还有什么变形问题的种类吗？）
+\end_layout
+
 \begin_layout Subsection
 \begin_inset CommandInset label
 LatexCommand label
