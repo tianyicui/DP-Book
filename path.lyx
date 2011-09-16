@@ -32,7 +32,7 @@
 \font_sf_scale 100
 \font_tt_scale 100
 
-\graphics xetex
+\graphics none
 \default_output_format default
 \output_sync 0
 \bibtex_command default
@@ -93,7 +93,7 @@
 \begin_inset Newline newline
 \end_inset
 
-v0.1 preview
+v0.2 preview
 \end_layout
 
 \begin_layout Author
@@ -701,7 +701,19 @@ M+N-2
 \end_layout
 
 \begin_layout Standard
-（TODO：写具体内容。）
+典型问题如，要求两条从矩阵左上到右下的路径，这两条路径不可以相交（或相交后同一单元格的数值只算一次），最大化路径经过的权值和。
+\end_layout
+
+\begin_layout Standard
+这种题目可以以两条路径所经过的单元格距左上单元格的距离划分阶段，以两条路径所经过的单元格坐标做为状态，列出状态转移方程。
+\end_layout
+
+\begin_layout Standard
+（TODO：方程其实写出来很难看，不如写程序代码附进去。）
+\end_layout
+
+\begin_layout Standard
+以上说明了矩阵中寻路问题的三种变形问题的方向，在实际中，将这道基础的动态规划题目经由多个方向同时变形，就可以构造出看似很复杂的题目。
 \end_layout
 
 \begin_layout Standard

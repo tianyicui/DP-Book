@@ -32,7 +32,7 @@
 \font_sf_scale 100
 \font_tt_scale 100
 
-\graphics xetex
+\graphics none
 \default_output_format default
 \output_sync 0
 \bibtex_command default
