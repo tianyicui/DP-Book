@@ -289,6 +289,12 @@ reference "sub:有向无环图中的寻路"
 \end_layout
 
 \begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:矩阵中的寻路"
+
+\end_inset
+
 矩阵中的寻路
 \end_layout
 
@@ -709,7 +715,7 @@ M+N-2
 \end_layout
 
 \begin_layout Standard
-（TODO：方程其实写出来很难看，不如写程序代码附进去。）
+（TODO：方程其实写出来很难看，不如写程序代码附录进去。）
 \end_layout
 
 \begin_layout Standard
@@ -728,6 +734,184 @@ name "sub:有向无环图中的寻路"
 \end_inset
 
 有向无环图中的寻路
+\end_layout
+
+\begin_layout Subsubsection
+从矩阵寻路到有向无环图
+\end_layout
+
+\begin_layout Standard
+在上一节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:矩阵中的寻路"
+
+\end_inset
+
+中，我们给出的基础问题及其所有变形问题都有一个共同点：要求找到从左上角到右下角的一条路径，且只能向相邻的右方、下方的单元格走。
+\end_layout
+
+\begin_layout Standard
+这个限制条件给所有的单元格排了个顺序，亦即，单元格
+\begin_inset Formula $(i+p,j+q)$
+\end_inset
+
+和
+\begin_inset Formula $(i,j)$
+\end_inset
+
+若均在路径中出现，
+\begin_inset Formula $(i+p,j+q)$
+\end_inset
+
+一定出现在
+\begin_inset Formula $(i,j)$
+\end_inset
+
+之后（
+\begin_inset Formula $p\geq0,q\geq0,p+q>0$
+\end_inset
+
+）。这个顺序决定了我们把动态规划的状态的表示确定为单元格的坐标时，状态之间的依赖关系是很明晰的，状态的求解顺序也不是个难题。
+\end_layout
+
+\begin_layout Standard
+我们来看一道没有这个只能向右、下走的限制条件的例题
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+PKU 1088
+\end_layout
+
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Standard
+仍然是
+\begin_inset Formula $M\times N$
+\end_inset
+
+的数字矩阵
+\begin_inset Formula $P$
+\end_inset
+
+，要求寻找的路径可以从任意一点出发，可以向上、下、左、右任意方向延伸，但路径经过的数字必须越来越小、单调递减。求矩阵中存在的最长的满足要求的路径。
+\end_layout
+
+\begin_layout Standard
+去掉了仅能向右、下走及固定起点、终点的限制条件，加上了一个路径中数字单调递减的限制条件。这里还是利用“只想一步”的方法来思考。路径的起点在哪里？不知道，设为
+\begin_inset Formula $(i,j)$
+\end_inset
+
+。路径的第一步往哪儿走？往哪里走能走得更远就往哪里走。于是状态转移方程是：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F[i,j]=1+\mathrm{max}\left\{ \begin{array}{c}
+0\\
+F[i,j-1]\text{ if }P_{i,j-1}<P_{i,j}\\
+F[i,j+1]\text{ if }P_{i,j+1}<P_{i,j}\\
+F[i-1,j]\text{ if }P_{i-1,j}<P_{i,j}\\
+F[i+1,j]\text{ if }P_{i+1,j}<P_{i,j}
+\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+考察这个状态转移方程所隐含的状态之间的依赖关系：一个状态的计算有可能依赖于它上下左右的任意一个状态，这看上去很可能存在状态间的循环依赖以至于状态转移方程无法被求
+解。但实际上，一个状态只依赖于其上下左右的单元格中元素数值比自身小的那些。换句话说，若将所有的单元格按照其中元素从小到大的顺序排个序，并按这个顺序求解状态的话，
+则只会有后面的状态依赖于前面的状态，不会出现求解某一状态时它所依赖的状态还未解出的可能。下面给出伪代码：
+\end_layout
+
+\begin_layout LyX-Code
+def 
+\begin_inset Formula $\mathsf{MatrixDecPath}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    
+\begin_inset Formula $F[0\ldots M+1,0\ldots N+1]\,\leftarrow0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    
+\begin_inset Formula $Q\,\leftarrow\left[(P_{i,j},i,j)\:|\:\text{for }i,j\text{ in }(1\ldots M,1\ldots N)\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    sort 
+\begin_inset Formula $Q$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    for 
+\begin_inset Formula $p,i,j$
+\end_inset
+
+ in 
+\begin_inset Formula $Q$
+\end_inset
+
+
+\begin_inset Formula $ $
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        
+\begin_inset Formula $F[i,j]\,\leftarrow1+\mathrm{max}\left\{ \begin{array}{c}
+0\\
+F[i,j-1]\text{ if }P_{i,j-1}<P_{i,j}\\
+F[i,j+1]\text{ if }P_{i,j+1}<P_{i,j}\\
+F[i-1,j]\text{ if }P_{i-1,j}<P_{i,j}\\
+F[i+1,j]\text{ if }P_{i+1,j}<P_{i,j}
+\end{array}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+（TODO: 伪代码直接抄状态转移方程写成这样是不是真的有点丑？）
+\end_layout
+
+\begin_layout Standard
+最后的答案就是
+\begin_inset Formula $F[1\ldots M,1\ldots N]$
+\end_inset
+
+中的最大值。
+\end_layout
+
+\begin_layout Standard
+值得指出的是，在看清了状态的求解不存在循环依赖的时候，就可以不用排序，而直接用记忆化递归的方法（TODO：引用MatrixWalkRec）实现。
+\end_layout
+
+\begin_layout Subsubsection
+有向无环图的拓扑排序
 \end_layout
 
 \begin_layout Section
