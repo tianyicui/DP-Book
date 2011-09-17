@@ -737,6 +737,12 @@ name "sub:有向无环图中的寻路"
 \end_layout
 
 \begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:从矩阵寻路到有向无环图"
+
+\end_inset
+
 从矩阵寻路到有向无环图
 \end_layout
 
@@ -882,20 +888,42 @@ def
 
 \begin_layout LyX-Code
         
-\begin_inset Formula $F[i,j]\,\leftarrow1+\mathrm{max}\left\{ \begin{array}{c}
-0\\
-F[i,j-1]\text{ if }P_{i,j-1}<P_{i,j}\\
-F[i,j+1]\text{ if }P_{i,j+1}<P_{i,j}\\
-F[i-1,j]\text{ if }P_{i-1,j}<P_{i,j}\\
-F[i+1,j]\text{ if }P_{i+1,j}<P_{i,j}
-\end{array}\right\} $
+\begin_inset Formula $d\,\leftarrow[(0,-1),(0,+1),(-1,0),(+1,0)]$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-（TODO: 伪代码直接抄状态转移方程写成这样是不是真的有点丑？）
+\begin_layout LyX-Code
+        
+\begin_inset Formula $ $
+\end_inset
+
+for 
+\begin_inset Formula $k\,\leftarrow0$
+\end_inset
+
+ to 
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+            if 
+\begin_inset Formula $P_{i+d[k].x,j+d[k].y}<P_{i,j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+                
+\begin_inset Formula $F[i,j]\,\leftarrow\mathrm{max}\{F[i,j],1+F[i+d[k].x,j+d[k].y]\}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -907,11 +935,23 @@ F[i+1,j]\text{ if }P_{i+1,j}<P_{i,j}
 \end_layout
 
 \begin_layout Standard
-值得指出的是，在看清了状态的求解不存在循环依赖的时候，就可以不用排序，而直接用记忆化递归的方法（TODO：引用MatrixWalkRec）实现。
+值得指出的是，以上给出的非递归的伪代码在理解和实现上均略有些麻烦。在看清了状态的求解不存在循环依赖的时候，就可以不用排序，而直接用记忆化递归的方法（TODO：引
+用MatrixWalkRec）实现。
 \end_layout
 
 \begin_layout Subsubsection
 有向无环图的拓扑排序
+\end_layout
+
+\begin_layout Standard
+上一节（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:从矩阵寻路到有向无环图"
+
+\end_inset
+
+）引入的新问题中，在矩阵中寻找的路径可以是任意的，不仅仅局限于从左上到右下的不准绕远路的那一种路径。命题者需要寻找的最佳路径，可以根据数据具有任意的形状。
 \end_layout
 
 \begin_layout Section
