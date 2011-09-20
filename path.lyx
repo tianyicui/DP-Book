@@ -1115,7 +1115,7 @@ Edsger Dijkstra在上世纪50年代提出的算法适用于顶点间边的长度
 \begin_inset Formula $S$
 \end_inset
 
-出发的长度最小的一条边的方法，将状态集合中已知的数目从
+出发的长度最小的一条边的方法，将状态集合中已解出状态的数目从
 \begin_inset Formula $1$
 \end_inset
 
@@ -1123,11 +1123,226 @@ Edsger Dijkstra在上世纪50年代提出的算法适用于顶点间边的长度
 \begin_inset Formula $2$
 \end_inset
 
-个。
+个。我们希望能够利用类似的方法，将已解出的状态的数目不断增加，直至S到所有顶点的最短路径都被确定。
 \end_layout
 
 \begin_layout Standard
-（TODO：UNFINISHED。）
+从另一个角度来看状态集合
+\begin_inset Formula $F$
+\end_inset
+
+，
+\begin_inset Formula $F[1\ldots|V|]$
+\end_inset
+
+中，状态之间的相互关系是什么呢？有边
+\begin_inset Formula $M_{i,j}$
+\end_inset
+
+相连的两个节点
+\begin_inset Formula $i$
+\end_inset
+
+和
+\begin_inset Formula $j$
+\end_inset
+
+的相互关系可以用一个不等式来刻画：
+\begin_inset Formula $F[i]+M_{i,j}\geq F[j]$
+\end_inset
+
+，其中不等式取等号当且仅当从
+\begin_inset Formula $S$
+\end_inset
+
+到
+\begin_inset Formula $j$
+\end_inset
+
+的某条最短路中，
+\begin_inset Formula $i$
+\end_inset
+
+是
+\begin_inset Formula $j$
+\end_inset
+
+的前驱顶点。从这个不等式可以推出：当
+\begin_inset Formula $F[i]$
+\end_inset
+
+的值已解出时，可以用
+\begin_inset Formula $F[j]\text{\,\leftarrow}\mathrm{max}\{F[j],F[i]+M_{i,j}\}$
+\end_inset
+
+的方法来更新状态
+\begin_inset Formula $F[j]$
+\end_inset
+
+，这也就是在最短路问题中经常用到的放松(relax)操作。
+\end_layout
+
+\begin_layout Standard
+上面说了两方面：第一，我们可以将所有的顶点分成已解出和未解出两个集合；第二，放松操作可以根据已解出的顶点的状态值更新未解出集合中的值。那么，在什么样的条件下，可
+以将一个顶点由未解出集合放入已解出集合中呢？答案是，选择未解出集合中状态值最小的那个放入已解出的集合中。这样选择的原因是，因为这个状态的值小于等于未解出集合中所
+有其它状态的值，在边权为正的前提下，其最短路的前驱节点必然是已解出集合中的节点，它的值不可能受任何未解出集合中状态的影响。
+\end_layout
+
+\begin_layout Standard
+Dijkstra算法的伪代码如下：
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $ $
+\end_inset
+
+
+\begin_inset Formula $Solved[1\ldots|V|]\,\leftarrow$
+\end_inset
+
+false
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $F[1\ldots|V|]\,\leftarrow\infty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $F[S]=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+for 
+\begin_inset Formula $|V|$
+\end_inset
+
+ times
+\end_layout
+
+\begin_layout LyX-Code
+    
+\begin_inset Formula $v\,\leftarrow undefined$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    for 
+\begin_inset Formula $i\,\leftarrow1$
+\end_inset
+
+ to 
+\begin_inset Formula $|V|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        if not 
+\begin_inset Formula $Solved[i]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+            
+\begin_inset Formula $ $
+\end_inset
+
+if 
+\begin_inset Formula $ $
+\end_inset
+
+
+\begin_inset Formula $v=undefined$
+\end_inset
+
+ or 
+\begin_inset Formula $F[i]<F[v]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+                
+\begin_inset Formula $v\,\leftarrow i$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    
+\begin_inset Formula $Solved[i]\,\leftarrow$
+\end_inset
+
+true
+\end_layout
+
+\begin_layout LyX-Code
+    for 
+\begin_inset Formula $j\,\leftarrow1$
+\end_inset
+
+ to 
+\begin_inset Formula $|V|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        if 
+\begin_inset Formula $M_{i,j}\:\mathrm{exists}$
+\end_inset
+
+ and not 
+\begin_inset Formula $Solved[j]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+            
+\begin_inset Formula $F[j]\,\leftarrow\mathrm{max}\{F[j],F[i]+M_{i,j}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+以上代码中主循环共循环
+\begin_inset Formula $|V|$
+\end_inset
+
+次，按照路径长度由小到大的顺序，每次解出一个状态。主循环中寻找到下一个放入已解出集合中节点以及利用已解出节点放松相邻的未解出节点的过程的实现都是
+\begin_inset Formula $O(V)$
+\end_inset
+
+的，故以上伪代码的时间复杂度是
+\begin_inset Formula $O(V^{2})$
+\end_inset
+
+。实际上，如果使用堆来保存
+\begin_inset Formula $F$
+\end_inset
+
+集合中未解出节点的信息，并用邻接表而非邻接矩阵来存储图，可以将复杂度优化到
+\begin_inset Formula $O(V\mathrm{log}E+E)$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Subsubsection
