@@ -85,7 +85,7 @@
 \begin_body
 
 \begin_layout Title
-背包问题九讲 2.0 alpha3
+背包问题九讲 2.0 beta1
 \end_layout
 
 \begin_layout Author
@@ -1562,6 +1562,7 @@ def
 \end_layout
 
 \begin_layout Subsection
+可行性问题
 \begin_inset Formula $O(VN)$
 \end_inset
 
@@ -1569,15 +1570,175 @@ def
 \end_layout
 
 \begin_layout Standard
-多重背包问题同样有
+当问题是“每种有若干件的物品能否填满给定容量的背包”，只须考虑填满背包的可行性，不需考虑每件物品的价值时，多重背包问题同样有
 \begin_inset Formula $O(VN)$
 \end_inset
 
-复杂度的算法。这个算法基于基本算法的状态转移方程，但应用单调队列的方法使每个状态的值可以以均摊
+复杂度的算法。
+\end_layout
+
+\begin_layout Standard
+例如，可以使用单调队列的数据结构，优化基本算法的状态转移方程，使每个状态的值可以以均摊
 \begin_inset Formula $O(1)$
 \end_inset
 
-的时间求解。我最初了解到这个方法是在楼天成的“男人八题”幻灯片上。（TODO：在此插入单调队列的讲解。）
+的时间求解。
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+我最初了解到这个方法是在楼天成的“男人八题”幻灯片上。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+下面介绍一种实现较为简单的
+\begin_inset Formula $O(VN)$
+\end_inset
+
+复杂度解多重背包问题的算法。它的基本思想是这样的：设
+\begin_inset Formula $F[i,j]$
+\end_inset
+
+表示“用了前
+\begin_inset Formula $i$
+\end_inset
+
+种物品填满容量为
+\begin_inset Formula $j$
+\end_inset
+
+的背包后，最多还剩下几个第
+\begin_inset Formula $i$
+\end_inset
+
+种物品可用”，如果
+\begin_inset Formula $F[i,j]=-1$
+\end_inset
+
+则说明这种状态不可行，若可行应满足
+\begin_inset Formula $0\leq F[i,j]\leq M_{i}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+递推求
+\begin_inset Formula $F[i,j]$
+\end_inset
+
+的伪代码如下：
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $F[0,1\ldots V]\,\leftarrow-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $F[0,0]\,\leftarrow0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+for 
+\begin_inset Formula $i\,\leftarrow1$
+\end_inset
+
+ to 
+\begin_inset Formula $N$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    
+\begin_inset Formula $ $
+\end_inset
+
+for 
+\begin_inset Formula $j\,\leftarrow0$
+\end_inset
+
+ to 
+\begin_inset Formula $V$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        if 
+\begin_inset Formula $F[i-1][j]\geq0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+            
+\begin_inset Formula $F[i][j]=M_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        else
+\end_layout
+
+\begin_layout LyX-Code
+            
+\begin_inset Formula $F[i][j]=-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    for 
+\begin_inset Formula $j\,\leftarrow0$
+\end_inset
+
+ to 
+\begin_inset Formula $V-C_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        if 
+\begin_inset Formula $F[i][j]>0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+            
+\begin_inset Formula $F[i][j+C_{i}]\,\leftarrow\mathrm{max}\{F[i][j+C_{i}],F[i][j]-1\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+最终
+\begin_inset Formula $F[N][0\ldots V]$
+\end_inset
+
+便是多重背包可行性问题的答案。
 \end_layout
 
 \begin_layout Subsection
