@@ -219,8 +219,18 @@ name "sec:01背包问题"
 \begin_inset Formula $i$
 \end_inset
 
-件物品耗费的空间是
+件物品耗费的费用是
 \begin_inset Formula $C_{i}$
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+也即占用背包的空间容量，后文统一称之为“费用(cost)”
+\end_layout
+
 \end_inset
 
 ，得到的价值是
@@ -681,7 +691,7 @@ for
 \end_layout
 
 \begin_layout Standard
-这个小技巧完全可以推广到其它类型的背包问题，后面也就不再对进行状态转移之前的初始化进行讲解。
+这个小技巧完全可以推广到其它类型的背包问题，后面不再对进行状态转移之前的初始化进行讲解。
 \end_layout
 
 \begin_layout Subsection
@@ -784,15 +794,15 @@ name "sec:完全背包问题"
 \begin_inset Formula $i$
 \end_inset
 
-种物品的耗费的空间是
+种物品的费用是
 \begin_inset Formula $C_{i}$
 \end_inset
 
-，得到的价值是
+，价值是
 \begin_inset Formula $W_{i}$
 \end_inset
 
-。求解：将哪些物品装入背包，可使这些物品的耗费的空间总和不超过背包容量，且价值总和最大。
+。求解：将哪些物品装入背包，可使这些物品的耗费的费用总和不超过背包容量，且价值总和最大。
 \end_layout
 
 \begin_layout Subsection
@@ -905,7 +915,7 @@ name "sub:一个简单有效的优化"
 \end_layout
 
 \begin_layout Standard
-这个优化的正确性是显然的：任何情况下都可将价值小耗费高的
+这个优化的正确性是显然的：任何情况下都可将价值小费用高的
 \begin_inset Formula $j$
 \end_inset
 
@@ -1554,7 +1564,7 @@ def
 \begin_inset Formula $W\cdot M$
 \end_inset
 
-) 
+)
 \end_layout
 
 \begin_layout Standard
@@ -1901,7 +1911,7 @@ for
 \end_layout
 
 \begin_layout Standard
-当然，最清晰的写法是调用我们前面给出的三个过程。
+最清晰的写法是调用我们前面给出的三个过程。
 \end_layout
 
 \begin_layout LyX-Code
@@ -2027,16 +2037,16 @@ for
 \end_layout
 
 \begin_layout Standard
-二维费用的背包问题是指：对于每件物品，具有两种不同的空间耗费，选择这件物品必须同时付出这两种代价。对于每种代价都有一个可付出的最大值（背包容量）。问怎样选择物品
-可以得到最大的价值。
+二维费用的背包问题是指：对于每件物品，具有两种不同的费用，选择这件物品必须同时付出这两种费用。对于每种费用都有一个可付出的最大值（背包容量）。问怎样选择物品可以
+得到最大的价值。
 \end_layout
 
 \begin_layout Standard
-设这两种代价分别为代价一和代价二，第
+设第
 \begin_inset Formula $i$
 \end_inset
 
-件物品所需的两种代价分别为
+件物品所需的两种费用分别为
 \begin_inset Formula $C_{i}$
 \end_inset
 
@@ -2044,7 +2054,7 @@ for
 \begin_inset Formula $D_{i}$
 \end_inset
 
-。两种代价可付出的最大值（两种背包容量）分别为
+。两种费用可付出的最大值（也即两种背包容量）分别为
 \begin_inset Formula $V$
 \end_inset
 
@@ -2072,7 +2082,7 @@ for
 \begin_inset Formula $i$
 \end_inset
 
-件物品付出两种代价分别为
+件物品付出两种费用分别为
 \begin_inset Formula $v$
 \end_inset
 
@@ -2357,7 +2367,7 @@ name "sec:有依赖的背包问题"
 \end_layout
 
 \begin_layout Standard
-这个问题由NOIP2006题目中金明的预算方案一题扩展而来。遵从该题的提法，将不依赖于别的物品的物品称为“主件”，依赖于某主件的物品称为“附件”。由这个问题的简
+这个问题由NOIP2006中“金明的预算方案”一题扩展而来。遵从该题的提法，将不依赖于别的物品的物品称为“主件”，依赖于某主件的物品称为“附件”。由这个问题的简
 化条件可知所有的物品由若干主件和依赖于每个主件的一个附件集合组成。
 \end_layout
 
@@ -2858,7 +2868,7 @@ f(v)=\mathrm{max}\{h(k)+l(v-k)\:|\:0\leq k\leq v\}
 \end_layout
 
 \begin_layout Standard
-还有，如果要求的是“总价值最小”“总件数最小”，只需简单的将上面的状态转移方程中的
+还有，如果要求的是“总价值最小”“总件数最小”，只需将状态转移方程中的
 \begin_inset Formula $\mathrm{max}$
 \end_inset
 
