@@ -951,15 +951,51 @@ reference "sub:从矩阵寻路到有向无环图"
 
 \end_inset
 
-）引入的新问题中，在矩阵中寻找的路径可以是任意的，不仅仅局限于从左上到右下的不准绕远路的那一种路径。命题者需要寻找的最佳路径，可以根据数据具有任意的形状。
+）引入的新问题中，在矩阵中寻找的路径可以是任意的，不仅仅局限于从左上到右下的不准绕远路的那一种路径。命题者需要寻找的最佳路径，可以根据数据具有任意的形状。但有一
+点值得注意，不管路径走成何种形状，都不可能存在一条数字单调递减的路径与自身交叉。换句话说，这个“单调递减”的条件，保证了作为寻路结果的路径中不可能存在环，导致了
+动态规划的状态转移中不可能出现循环依赖，决定了这道题目可以用动态规划来解。
+\end_layout
+
+\begin_layout Standard
+用图论的术语来说明，不管是只能向右、向下移动的矩阵，还是经过数字单调递减的矩阵，抽象成图论中图的模型之后，都是有向无环图。有向无环图的最重要性质就是，其中的定点
+可以进行拓扑排序。
+\end_layout
+
+\begin_layout Standard
+（TODO: UNFINISHED。用组合数学、偏序关系、全序关系的角度来叙述。）
 \end_layout
 
 \begin_layout Section
 一般图中的寻路
 \end_layout
 
+\begin_layout Standard
+在有向无环图中，确定了拓扑序以后，不管是寻找最短路还是最长路的问题，都变得易于解决了。但在一般的并不存在拓扑序的图中，如何寻找两点之间的最短路、从一点出发到其它
+所有点的最短路、所有点对之间的最短路的算法并非显而易见。值得一提的是，下面解决这些问题的经典算法都属于动态规划的范畴。
+\end_layout
+
 \begin_layout Subsection
 单起点寻路的三种算法
+\end_layout
+
+\begin_layout Standard
+问题：已知图
+\begin_inset Formula $G=(V,M)$
+\end_inset
+
+，其中
+\begin_inset Formula $V$
+\end_inset
+
+是顶点集合，
+\begin_inset Formula $M$
+\end_inset
+
+是表示边的邻接矩阵，求顶点
+\begin_inset Formula $S$
+\end_inset
+
+到其它所有顶点的最短路径。
 \end_layout
 
 \begin_layout Subsubsection
@@ -970,6 +1006,128 @@ name "sub:Dijkstra算法"
 \end_inset
 
 Dijkstra算法
+\end_layout
+
+\begin_layout Standard
+用动态规划的眼光来看，需要求解的是
+\begin_inset Formula $\left|V\right|-1$
+\end_inset
+
+个形式完全相同的问题，且这些问题之间明显存在着相互的关联和依赖。很容易想到，设
+\begin_inset Formula $F[x]$
+\end_inset
+
+为
+\begin_inset Formula $S$
+\end_inset
+
+到
+\begin_inset Formula $x$
+\end_inset
+
+的最短路径的长度这样的状态表示。
+\end_layout
+
+\begin_layout Standard
+状态的表示很简单，但状态之间的关系却很复杂，实际上可以是任意的。状态之间关系的复杂造成了确定求解状态顺序时的复杂。如果是有向无环图，只需要简单地按照拓扑顺序即可
+求解。但一般图中又按照何种顺序求解这
+\begin_inset Formula $ $
+\end_inset
+
+
+\begin_inset Formula $\left|V\right|-1$
+\end_inset
+
+个最短路问题呢？
+\end_layout
+
+\begin_layout Standard
+Edsger Dijkstra在上世纪50年代提出的算法适用于顶点间边的长度均为正数的情景。在边权为正的前提下，可以根据各个状态的答案的大小来划分状态求解的顺序
+。
+\end_layout
+
+\begin_layout Standard
+例如，在算法刚刚开始的时候，在
+\begin_inset Formula $F[1\ldots\left|V\right|]$
+\end_inset
+
+这
+\begin_inset Formula $|V|$
+\end_inset
+
+个状态中，我们已知的状态只有一个：
+\begin_inset Formula $F[S]=0$
+\end_inset
+
+，从
+\begin_inset Formula $S$
+\end_inset
+
+到自身的最短路径长度为零。下面根据这个状态的值去试图求解其它的状态。顶点
+\begin_inset Formula $S$
+\end_inset
+
+可能有若干条指向其它顶点的出边，在这些边里，肯定有最短的一条，不妨设为
+\begin_inset Formula $M_{S,S_{1}}=k$
+\end_inset
+
+，如果我们知道了
+\begin_inset Formula $S$
+\end_inset
+
+到
+\begin_inset Formula $S_{1}$
+\end_inset
+
+的边是
+\begin_inset Formula $S$
+\end_inset
+
+所有出边中最短的，我们就可以断定：
+\begin_inset Formula $F[S_{1}]=k$
+\end_inset
+
+。原因是：边权都是正的，其它任何一条从
+\begin_inset Formula $S$
+\end_inset
+
+迂回走向
+\begin_inset Formula $S_{1}$
+\end_inset
+
+的路径，例如
+\begin_inset Formula $S-S_{2}-\cdots-S_{1}$
+\end_inset
+
+一定不会更优，因为
+\begin_inset Formula $M_{S,S_{1}\text{}}$
+\end_inset
+
+是同起点的边中最小的，
+\begin_inset Formula $M_{S,S_{2}}\geq M_{S,S_{1}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+就这样，我们通过找到从起点
+\begin_inset Formula $S$
+\end_inset
+
+出发的长度最小的一条边的方法，将状态集合中已知的数目从
+\begin_inset Formula $1$
+\end_inset
+
+个提高到了
+\begin_inset Formula $2$
+\end_inset
+
+个。
+\end_layout
+
+\begin_layout Standard
+（TODO：UNFINISHED。）
 \end_layout
 
 \begin_layout Subsubsection
