@@ -93,7 +93,7 @@
 \begin_inset Newline newline
 \end_inset
 
-v0.2 preview
+v0.3 preview
 \end_layout
 
 \begin_layout Author
@@ -1211,7 +1211,7 @@ false
 \end_layout
 
 \begin_layout LyX-Code
-\begin_inset Formula $F[S]=0$
+\begin_inset Formula $F[S]\,\leftarrow0$
 \end_inset
 
 
@@ -1349,8 +1349,171 @@ true
 Bellman-Ford算法
 \end_layout
 
+\begin_layout Standard
+Dijkstra算法是按照路径的长度从小到大的顺序划分阶段、决定状态求解的顺序，但它只适用于边权为正的场合。当边权可以是负数时，在同一条最短路径中后面顶点的距离
+长度不一定大于前面的顶点，此时Dijkstra算法以及其划分阶段的方式就不再适用了。
+\end_layout
+
+\begin_layout Standard
+在Bellman-Ford算法中，采用最短路径包含的边的数量从小到大的顺序划分阶段。在初始阶段时，和Dijkstra算法一样，只有
+\begin_inset Formula $F[S]$
+\end_inset
+
+是已知的，其它都设为
+\begin_inset Formula $+\infty$
+\end_inset
+
+。每个阶段中都用所有的边尝试进行放松操作。在第一次迭代时，最短路径只包含一条边的状态肯定已经求解完毕了；尽管我们此时并不能具体地确定求解完毕的是哪些状态。在第二
+次迭代时，最短路径包含两条边的状态会由前阶段中求解完毕的状态加上一次放松操作而得到。⋯⋯在第
+\begin_inset Formula $k$
+\end_inset
+
+次迭代时，最短路径包含
+\begin_inset Formula $k$
+\end_inset
+
+条边的状态值会经由
+\begin_inset Formula $k$
+\end_inset
+
+次成功的放松操作而被求解完毕。
+\end_layout
+
+\begin_layout Standard
+如果在第
+\begin_inset Formula $k$
+\end_inset
+
+阶段中所有的放松操作都无效，没有更新任何一个状态的值，那么可以断定不存在包含
+\begin_inset Formula $k$
+\end_inset
+
+条边及以上的最短路径，可以不再继续迭代求解了。
+\end_layout
+
+\begin_layout Standard
+从另一个角度将，如果在第
+\begin_inset Formula $|V|$
+\end_inset
+
+阶段仍然有状态的值被更新，意味着存在包含边数不小于
+\begin_inset Formula $|V\text{|}$
+\end_inset
+
+的最短路径。然而若最短路径是不包含环的简单路的话，则包含的边数在最多（所有的定点都在这条简单路中）也只应该有
+\begin_inset Formula $|V|-1$
+\end_inset
+
+条。所以，如果状态转移进行到第
+\begin_inset Formula $|V|$
+\end_inset
+
+阶段仍未收敛停止，则说明图中存在负环。换言之，说明图中某些顶点（从任一负环中任意顶点出发能到达的顶点）的最短路径不存在。
+\end_layout
+
+\begin_layout Standard
+下面给出Bellman-Ford算法的伪代码。
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $F[1\ldots|V|]\,\leftarrow\infty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $F[S]\,\leftarrow0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $ $
+\end_inset
+
+for 
+\begin_inset Formula $|V|$
+\end_inset
+
+ times
+\end_layout
+
+\begin_layout LyX-Code
+    
+\begin_inset Formula $relaxed\,\leftarrow false$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    for 
+\begin_inset Formula $M_{i,j}$
+\end_inset
+
+ in 
+\begin_inset Formula $M$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        if 
+\begin_inset Formula $F[i]+M_{i,j}<F[j]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+            
+\begin_inset Formula $relaxed\,\leftarrow true$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+            
+\begin_inset Formula $F[j]\,\leftarrow F[i]+M_{i,j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    if not 
+\begin_inset Formula $relaxed$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        break
+\end_layout
+
+\begin_layout LyX-Code
+    if 
+\begin_inset Formula $|V|$
+\end_inset
+
+th time
+\end_layout
+
+\begin_layout LyX-Code
+        output 存在负权环
+\end_layout
+
 \begin_layout Subsubsection
 Yen算法
+\end_layout
+
+\begin_layout Standard
+（TODO：这个有没有必要写呢？）
 \end_layout
 
 \begin_layout Subsection
