@@ -962,7 +962,100 @@ reference "sub:从矩阵寻路到有向无环图"
 \end_layout
 
 \begin_layout Standard
-（TODO: UNFINISHED。用组合数学、偏序关系、全序关系的角度来叙述。）
+下面从数学中“关系”的角度诠释一下有向无环图的拓扑排序。
+\end_layout
+
+\begin_layout Standard
+数学中定义的二元关系
+\begin_inset Formula $R$
+\end_inset
+
+，是指任意的有序对的集合。若
+\begin_inset Formula $R\subseteq X\times Y$
+\end_inset
+
+，则用
+\begin_inset Formula $xRy$
+\end_inset
+
+表明
+\begin_inset Formula $x$
+\end_inset
+
+与
+\begin_inset Formula $y$
+\end_inset
+
+之间存在关系
+\begin_inset Formula $R$
+\end_inset
+
+，有
+\begin_inset Formula $\text{x\in X,y\in Y,(x,y)\in R}$
+\end_inset
+
+。常见的一种二元关系即是“函数”，函数的特点是，定义域中的一个值，对应于值域中的唯一一个值。而在一般的关系中则没有这样的限制。
+\end_layout
+
+\begin_layout Standard
+有一类特殊的关系叫做严格偏序关系，其定义是：满足反自反、反对称、传递的关系。反自反的意思是说，任何元素和自己都不存在关系，
+\begin_inset Formula $\forall x\:(x,x)\notin R$
+\end_inset
+
+；反对称的意思是说如果
+\begin_inset Formula $x$
+\end_inset
+
+和
+\begin_inset Formula $y$
+\end_inset
+
+有关系，反过来
+\begin_inset Formula $y$
+\end_inset
+
+和
+\begin_inset Formula $x$
+\end_inset
+
+肯定没关系，
+\begin_inset Formula $(x,y)\in R\Rightarrow(y,x)\notin R$
+\end_inset
+
+；传递的意思是说，如果
+\begin_inset Formula $x$
+\end_inset
+
+跟
+\begin_inset Formula $y$
+\end_inset
+
+有关系，
+\begin_inset Formula $y$
+\end_inset
+
+跟
+\begin_inset Formula $z$
+\end_inset
+
+有关系，则
+\begin_inset Formula $x$
+\end_inset
+
+和
+\begin_inset Formula $z$
+\end_inset
+
+肯定也有关系，
+\begin_inset Formula $xRy,yRz\Rightarrow xRz$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+（TODO：如果将图的顶点的集合看做关系中的定义域与值域，同时有向边看做关系集合中的有序对的话，则图论中的“有向无环图”的概念完全对应于组合数学中的“严格偏序关
+系的链”的概念。）
 \end_layout
 
 \begin_layout Section
@@ -1334,12 +1427,12 @@ true
 \begin_inset Formula $O(V^{2})$
 \end_inset
 
-。实际上，如果使用堆来保存
+。实际上，如果使用二叉堆来保存
 \begin_inset Formula $F$
 \end_inset
 
 集合中未解出节点的信息，并用邻接表而非邻接矩阵来存储图，可以将复杂度优化到
-\begin_inset Formula $O(V\mathrm{log}E+E)$
+\begin_inset Formula $O(ElogV)$
 \end_inset
 
 。
@@ -1506,14 +1599,6 @@ th time
 
 \begin_layout LyX-Code
         output 存在负权环
-\end_layout
-
-\begin_layout Subsubsection
-Yen算法
-\end_layout
-
-\begin_layout Standard
-（TODO：这个有没有必要写呢？）
 \end_layout
 
 \begin_layout Subsection
