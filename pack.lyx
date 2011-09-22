@@ -4,17 +4,14 @@
 \begin_header
 \textclass article
 \begin_preamble
-\usepackage{indentfirst}
-\setlength{\parindent}{2em}
-
 \usepackage{datetime}
 \renewcommand{\dateseparator}{-}
 
-\setmainfont[BoldFont=STSong,ItalicFont=STKaiti]{STSong}
-\setsansfont[BoldFont=STHeiti]{STHeiti}
-\setmonofont{STFangsong}
-\XeTeXlinebreaklocale "zh"
-\XeTeXlinebreakskip = 0pt plus 1pt
+\usepackage[BoldFont,SlantFont,CJKsetspaces,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=STSong,ItalicFont=STKaiti]{STSong}
+\setCJKsansfont[BoldFont=STHeiti]{STHeiti}
+\setCJKmonofont{STFangsong}
+\parindent 2em
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false

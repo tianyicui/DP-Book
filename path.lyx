@@ -4,17 +4,14 @@
 \begin_header
 \textclass article
 \begin_preamble
-\usepackage{indentfirst}
-\setlength{\parindent}{2em}
-
 \usepackage{datetime}
 \renewcommand{\dateseparator}{-}
 
-\setmainfont[BoldFont=STSong,ItalicFont=STKaiti]{STSong}
-\setsansfont[BoldFont=STHeiti]{STHeiti}
-\setmonofont{STFangsong}
-\XeTeXlinebreaklocale "zh"
-\XeTeXlinebreakskip = 0pt plus 1pt
+\usepackage[BoldFont,SlantFont,CJKsetspaces,CJKchecksingle]{xeCJK}
+\setCJKmainfont[BoldFont=STSong,ItalicFont=STKaiti]{STSong}
+\setCJKsansfont[BoldFont=STHeiti]{STHeiti}
+\setCJKmonofont{STFangsong}
+\parindent 2em
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -1513,6 +1510,10 @@ Dijkstra算法是按照路径的长度从小到大的顺序划分阶段、决定
 \end_inset
 
 
+\begin_inset Formula $ $
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
@@ -1601,6 +1602,14 @@ th time
         output 存在负权环
 \end_layout
 
+\begin_layout Subsubsection
+最短路树
+\end_layout
+
+\begin_layout Standard
+（TODO：通过引入最短路树来讲解动态规划中“最优性和历史无关”“无后效性”等概念。Markovian?）
+\end_layout
+
 \begin_layout Subsection
 \begin_inset CommandInset label
 LatexCommand label
@@ -1611,8 +1620,36 @@ name "sub:全图寻路的Floyd算法"
 全图寻路的Floyd算法
 \end_layout
 
+\begin_layout Standard
+上面给出了有向图中求单源最短路的两种算法，分别适用于无负权和有负权的两种情况。
+\end_layout
+
+\begin_layout Standard
+在有些情况下，我们需要求得整个图中所有顶点对之间两两的最短路。这种情况应该怎么做呢？
+\end_layout
+
+\begin_layout Standard
+先看一个简化问题吧，假设图的有向边并没有长度的概念，只有“连通”和“不连通”两种情况。换句话说，图的邻接矩阵
+\begin_inset Formula $M$
+\end_inset
+
+里面储存的值是布尔型(boolean)的。怎样对于图中的所有顶点对
+\begin_inset Formula $(i,j)$
+\end_inset
+
+求得它们之间的连通性呢？这个问题，实际上就是在求集合上二元关系的传递闭包。
+\end_layout
+
+\begin_layout Standard
+(TODO: 组合数学）
+\end_layout
+
 \begin_layout Subsection
 Hamiltonian回路
+\begin_inset Formula $ $
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
