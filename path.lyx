@@ -2,7 +2,7 @@
 \lyxformat 413
 \begin_document
 \begin_header
-\textclass article
+\textclass scrartcl
 \begin_preamble
 \usepackage{datetime}
 \renewcommand{\dateseparator}{-}
