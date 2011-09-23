@@ -1051,8 +1051,96 @@ reference "sub:从矩阵寻路到有向无环图"
 \end_layout
 
 \begin_layout Standard
-（TODO：如果将图的顶点的集合看做关系中的定义域与值域，同时有向边看做关系集合中的有序对的话，则图论中的“有向无环图”的概念完全对应于组合数学中的“严格偏序关
-系的链”的概念。）
+可以举一个严格偏序关系的例子，集合之间的“真子集”关系。任两个集合
+\begin_inset Formula $P$
+\end_inset
+
+和
+\begin_inset Formula $Q$
+\end_inset
+
+，有可能
+\begin_inset Formula $P$
+\end_inset
+
+是
+\begin_inset Formula $Q$
+\end_inset
+
+的真子集，有可能
+\begin_inset Formula $Q$
+\end_inset
+
+是
+\begin_inset Formula $P$
+\end_inset
+
+的真子集，也有可能二者谁都不是谁的真子集。可以验证这个关系满足反自反、反对称和传递关系。
+\end_layout
+
+\begin_layout Standard
+如果将图的顶点的集合看做关系中的定义域与值域，同时有向边看做关系集合中的有序对的话，则图论中的“有向无环图”的概念对应到组合数学中，就是“严格偏序关系的子集”。
+\end_layout
+
+\begin_layout Standard
+有向无环图满足“反自反”的性质，因为没有自环；还满足“反对称”的性质，否则就有长度为
+\begin_inset Formula $2$
+\end_inset
+
+的环。但有向无环图不满足传递性，
+\begin_inset Formula $a$
+\end_inset
+
+和
+\begin_inset Formula $b$
+\end_inset
+
+之间以及
+\begin_inset Formula $b$
+\end_inset
+
+和
+\begin_inset Formula $c$
+\end_inset
+
+之间都有边，并不能保证
+\begin_inset Formula $a$
+\end_inset
+
+和
+\begin_inset Formula $c$
+\end_inset
+
+之间就一定有边。所以，有向无环图是严格偏序关系的子集。
+\end_layout
+
+\begin_layout Standard
+从另一个角度讲，严格偏序关系中肯定没有环。因为如果有环，根据传递性，必然会存在自环，违反了反自反性。所以，严格偏序关系的子集一定是有向无环图。
+\end_layout
+
+\begin_layout Standard
+偏序关系之所以“偏”，是因为其中并不是任意两个元素都是可以比较出它们之间的“序”的。如果任意两个元素都能够确定顺序，且此顺序具有一致性，那么这种关系就叫做全序关
+系。也就是说，集合中的所有元素能够按照这种关系排一下顺序。例如自然数之间的大于、小于关系，单词之间的字典序关系，都是全序关系的例子。
+\end_layout
+
+\begin_layout Standard
+有向无环图的拓扑排序的实质是，给这种“严格偏序关系的子集”指定一个全序，保证所有的边的方向都是从此排序的前面的顶点指向后面的顶点，不存在反向的边。
+\end_layout
+
+\begin_layout Standard
+怎么求出有向无环图的一个拓扑序呢？
+\end_layout
+
+\begin_layout Standard
+（TODO：UNFINISHED）
+\end_layout
+
+\begin_layout Standard
+有了拓扑序的“不存在反向边”的性质，就可以利用这种排序更好地解决有向无环图中的寻路问题。
+\end_layout
+
+\begin_layout Standard
+（TODO：UNFINISHED）
 \end_layout
 
 \begin_layout Section
@@ -1625,23 +1713,28 @@ name "sub:全图寻路的Floyd算法"
 \end_layout
 
 \begin_layout Standard
-在有些情况下，我们需要求得整个图中所有顶点对之间两两的最短路。这种情况应该怎么做呢？
+在有些情况下，我们需要求得整个图中所有顶点对之间两两的最短路。将图中的每一个点设为起点，用Dijkstra之类的算法求一次单源最短路是一种可以考虑的方案。但是否
+有更简便的做法呢？
 \end_layout
 
 \begin_layout Standard
-先看一个简化问题吧，假设图的有向边并没有长度的概念，只有“连通”和“不连通”两种情况。换句话说，图的邻接矩阵
-\begin_inset Formula $M$
+我们还是试图用动态规划的方法来解决问题。设
+\begin_inset Formula $F[i,j]$
 \end_inset
 
-里面储存的值是布尔型(boolean)的。怎样对于图中的所有顶点对
-\begin_inset Formula $(i,j)$
+表示顶点
+\begin_inset Formula $i$
 \end_inset
 
-求得它们之间的连通性呢？这个问题，实际上就是在求集合上二元关系的传递闭包。
+和
+\begin_inset Formula $j$
+\end_inset
+
+之间的最短路。
 \end_layout
 
 \begin_layout Standard
-(TODO: 组合数学）
+（TODO：UNFINISHED）
 \end_layout
 
 \begin_layout Subsection
