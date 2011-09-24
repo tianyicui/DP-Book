@@ -82,7 +82,7 @@
 \begin_body
 
 \begin_layout Title
-背包问题九讲 2.0 beta1.1
+背包问题九讲 2.0 beta1.2
 \end_layout
 
 \begin_layout Author
@@ -350,6 +350,26 @@ for
 
  to 
 \begin_inset Formula $N$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+    for 
+\begin_inset Formula $v\,\leftarrow0$
+\end_inset
+
+ to 
+\begin_inset Formula $C_{i}-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+        
+\begin_inset Formula $F[i,v]\,\leftarrow F[i-1,v]$
 \end_inset
 
 
@@ -2154,12 +2174,20 @@ F[i,v,u]=\mathrm{max\{F[i-1,v,u],F[i-1,v-C_{i},u-D_{i}]+W_{i}\}}
 \end_layout
 
 \begin_layout Subsection
-复整数域上的背包问题
+二维整数域
+\begin_inset Formula $N^{2}$
+\end_inset
+
+上的背包问题
 \end_layout
 
 \begin_layout Standard
-另一种看待二维背包问题的思路是：将它看待成复整数域上的背包问题。也就是说，背包的容量以及每件物品的费用都是一个复整数。而常见的一维背包问题则是自然数域上的背包问
-题。所以说，一维背包的种种思想方法，往往可以应用于二位背包问题的求解中，因为只是数域扩大了而已。
+另一种看待二维背包问题的思路是：将它看待成
+\begin_inset Formula $N^{2}$
+\end_inset
+
+域上的背包问题。也就是说，背包的容量以及每件物品的费用都是一个二维向量。而常见的一维背包问题则是自然数域上的背包问题。所以说，一维背包的种种思想方法，往往可以应
+用于二位背包问题的求解中，因为只是数域扩大了而已。
 \end_layout
 
 \begin_layout Standard
