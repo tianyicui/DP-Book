@@ -82,7 +82,7 @@
 \begin_body
 
 \begin_layout Title
-背包问题九讲 2.0 beta1.2
+背包问题九讲 2.0 beta1.3
 \end_layout
 
 \begin_layout Author
@@ -2644,7 +2644,7 @@ name "sec:泛化物品"
 \end_inset
 
 整除且
-\begin_inset Formula $\frac{v}{c}\leq n$
+\begin_inset Formula $\frac{v}{c}\leq m$
 \end_inset
 
 ，其它情况函数值均为
