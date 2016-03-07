@@ -765,7 +765,7 @@ for
 \end_inset
 
  to 
-\begin_inset Formula $\mathrm{max}(V-\Sigma_{i}^{N}W_{i},C_{i})$
+\begin_inset Formula $\mathrm{max}(V-\Sigma_{i}^{N}C_{i},C_{i})$
 \end_inset
 
 
